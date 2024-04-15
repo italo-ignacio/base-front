@@ -1,26 +1,40 @@
 # Introduction
 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.
+Comandos para rodaro projeto
 
-# Getting Started
+- `yarn`
+- `yarn dev`
 
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
+# tipos de commits
 
-1. Installation process
-2. Software dependencies
-3. Latest releases
-4. API references
+alteração `refactor:`
 
-# Build and Test
+criação `feat:`
 
-TODO: Describe and show how to build your code and run the tests.
+correção `fix:`
 
-# Contribute
+# Comandos
 
-TODO: Explain how other users and developers can contribute to make your code better.
+enviar para azure
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
+- `git add .`
 
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+- `git commit -m "nome-commit"`
+
+- `git checkout -b nome do item/numero do item`
+
+- `git pull origin develop`
+
+- `git push origin HEAD`
+
+puxar de develop
+
+- `git pull origin develop`
+
+criar nova branch
+
+- `git checkout -b "nome-branch"`
+
+alterar branch
+
+- `git checkout "nome-branch"`
