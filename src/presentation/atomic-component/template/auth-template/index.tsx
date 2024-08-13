@@ -16,12 +16,7 @@ export const AuthTemplate: FC = () => {
     >
       <div className={'hidden laptop:flex w-full h-full items-center justify-center relative'}>
         <div className={'h-full w-full bg-[#ff000027] z-10 absolute top-0 left-0'} />
-
-        <img
-          alt={'logo fiesp'}
-          className={'laptop:min-h-screen border-b-[10px] border-red'}
-          src={'/fiesp.jpg'}
-        />
+        <img alt={'logo'} className={'laptop:min-h-screen'} src={'/favicon.png'} />
       </div>
 
       <Outlet />

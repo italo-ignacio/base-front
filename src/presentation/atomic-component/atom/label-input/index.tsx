@@ -1,5 +1,5 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-duplicate-props */
+/* eslint-disable no-nested-ternary */
 import { ErrorOutline, WarningOutlined } from '@mui/icons-material';
 import { MaskInput } from 'presentation/atomic-component/atom/mask-input';
 import { TextField } from '@mui/material';
@@ -8,28 +8,39 @@ import type { InputBaseComponentProps, TextFieldProps } from '@mui/material';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface LabelInputProps
-  extends Pick<TextFieldProps, 'InputProps' | 'onKeyDown' | 'size' | 'sx'> {
+  extends Pick<
+    TextFieldProps,
+    | 'defaultValue'
+    | 'InputProps'
+    | 'inputProps'
+    | 'label'
+    | 'maxRows'
+    | 'minRows'
+    | 'multiline'
+    | 'onChange'
+    | 'onKeyDown'
+    | 'onKeyUp'
+    | 'size'
+    | 'value'
+  > {
   id?: string;
   register?: UseFormRegisterReturn;
-  value?: string;
   type?: string;
   variant?: 'filled' | 'outlined' | 'standard';
   uppercase?: boolean;
-  defaultValue?: string;
   required?: boolean;
-  label?: string;
   labelTop?: string;
   autoComplete?: string;
   mask?: string;
   placeholder?: string;
   disabled?: boolean;
   autoFocus?: boolean;
+  maxWidth?: number | string;
   children?: ReactNode;
   error?: boolean;
   errorMessage?: string;
   EndIcon?: ReactNode;
   StartIcon?: ReactNode;
-  onChange?: (e: { target: { value: string } }) => void;
   onFocus?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
   onFocusOut?: () => void;
 }
@@ -38,6 +49,7 @@ export const LabelInput: FC<LabelInputProps> = ({
   register,
   label,
   children,
+  maxWidth,
   mask,
   autoComplete,
   required,
@@ -58,16 +70,10 @@ export const LabelInput: FC<LabelInputProps> = ({
       startAdornment: props.StartIcon ? props.StartIcon : null
     };
 
-    const labelElement = label ? (
-      <span>
-        {label}
-        {required ? <span className={'text-[#ff4747]'}> *</span> : ''}
-      </span>
-    ) : undefined;
-
     const inputProps: InputBaseComponentProps = {
+      ...props.inputProps,
       style: {
-        padding: '14px',
+        padding: props.variant === 'filled' || props.variant === 'standard' ? '14px 2px' : '14px',
         textTransform: props.uppercase ? 'uppercase' : 'none'
       }
     };
@@ -79,11 +85,14 @@ export const LabelInput: FC<LabelInputProps> = ({
           InputProps={InputProps}
           error={props.error}
           inputProps={inputProps}
-          label={labelElement}
+          label={label}
           mask={mask}
           onBlur={props.onFocusOut}
           onFocus={props.onFocus}
           register={register}
+          sx={{
+            width: '100%'
+          }}
         />
       );
 
@@ -92,15 +101,17 @@ export const LabelInput: FC<LabelInputProps> = ({
         {...register}
         {...props}
         InputProps={InputProps}
-        autoFocus={props.autoFocus}
         disabled={props.disabled}
         error={props.error}
         inputProps={inputProps}
-        label={labelElement}
+        label={label}
         onBlur={props.onFocusOut}
         onChange={props.onChange ? props.onChange : register?.onChange}
         onFocus={props.onFocus}
         placeholder={props.placeholder}
+        sx={{
+          width: '100%'
+        }}
         type={props.type}
         value={props.value}
       />
@@ -108,15 +119,20 @@ export const LabelInput: FC<LabelInputProps> = ({
   };
 
   return (
-    <div className={'flex flex-col gap-1 w-full text-start'}>
+    <div
+      className={'flex flex-col gap-1 w-full text-start'}
+      style={{
+        maxWidth
+      }}
+    >
       {labelTop ? (
-        <span>
+        <span className={'font-semibold'}>
           {labelTop}
           {required ? <span className={'text-[#ff4747]'}> *</span> : ''}
         </span>
       ) : null}
 
-      {getElement()}
+      <div className={'flex w-full'}>{getElement()}</div>
 
       {props.error && props.errorMessage ? (
         <span className={'flex gap-1 mb-1 text-red'}>
